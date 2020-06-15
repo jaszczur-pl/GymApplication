@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace GymApplication.Models
         [Required]
         public string Password { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Reservations> Reservations { get; set; }
     }
 }

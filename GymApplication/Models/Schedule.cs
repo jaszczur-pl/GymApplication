@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,8 +30,10 @@ namespace GymApplication.Models
         [Required]
         public int NumberOfAvailablePlaces { get; set; }
 
+        [JsonIgnore]
         public virtual Classes Classes { get; set; }
 
+        [JsonIgnore]
         public virtual Trainer Trainer { get; set; }
 
         public virtual ICollection<Reservations> Reservations { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace GymApplication.Models
         [Required]
         public int UsersLimit { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }
