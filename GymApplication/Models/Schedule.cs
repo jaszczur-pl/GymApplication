@@ -36,6 +36,7 @@ namespace GymApplication.Models
         [JsonIgnore]
         public virtual Trainer Trainer { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Reservations> Reservations { get; set; }
     }
 }
