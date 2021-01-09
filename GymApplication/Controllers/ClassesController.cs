@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GymApplication.DAL;
+using GymApplication.Filters;
 using GymApplication.Models;
 
 namespace GymApplication.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [TwoFactorAuth]
     public class ClassesController : ApiController
     {
         private GymDbContext db = new GymDbContext();
@@ -72,20 +75,20 @@ namespace GymApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Classes
-        [ResponseType(typeof(Classes))]
-        public async Task<IHttpActionResult> PostClasses(Classes classes)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+// POST: api/Classes
+[ResponseType(typeof(Classes))]
+public async Task<IHttpActionResult> PostClasses(Classes classes)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
 
-            db.Classes.Add(classes);
-            await db.SaveChangesAsync();
+    db.Classes.Add(classes);
+    await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = classes.ID }, classes);
-        }
+    return CreatedAtRoute("DefaultApi", new { id = classes.ID }, classes);
+}
 
         // DELETE: api/Classes/5
         [ResponseType(typeof(Classes))]

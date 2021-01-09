@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GymApplication.DAL;
+using GymApplication.Filters;
 using GymApplication.Models;
 
 namespace GymApplication.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [TwoFactorAuth]
     public class SchedulesController : ApiController
     {
         private GymDbContext db = new GymDbContext();

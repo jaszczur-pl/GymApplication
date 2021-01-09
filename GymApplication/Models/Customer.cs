@@ -10,7 +10,8 @@ namespace GymApplication.Models
     public class Customer
     {
         [Key]
-        public int ID { get; set; }
+        [StringLength(128)]
+        public string ID { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -20,9 +21,6 @@ namespace GymApplication.Models
 
         [Required]
         public string Email { get; set; }
-
-        [Required]
-        public string Password { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Reservations> Reservations { get; set; }

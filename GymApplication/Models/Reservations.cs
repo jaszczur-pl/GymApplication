@@ -14,7 +14,8 @@ namespace GymApplication.Models
 
         [Required]
         [ForeignKey("Customer")]
-        public int CustomerID { get; set; }
+        [StringLength(128)]
+        public string CustomerID { get; set; }
 
         [Required]
         [ForeignKey("Schedule")]

@@ -10,21 +10,28 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using GymApplication.DAL;
+using GymApplication.Filters;
 using GymApplication.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GymApplication.Controllers
 {
+    [Authorize]
+    [TwoFactorAuth]
     public class CustomersController : ApiController
     {
         private GymDbContext db = new GymDbContext();
 
         // GET: api/Customers
+        [Authorize(Roles = "Admin")]
         public IQueryable<Customer> GetCustomers()
         {
             return db.Customers;
         }
 
+
         // GET: api/Customers/5
+        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> GetCustomer(int id)
         {
@@ -38,8 +45,9 @@ namespace GymApplication.Controllers
         }
 
         // PUT: api/Customers/5
+        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IHttpActionResult> PutCustomer(string id, Customer customer)
         {
             if (!ModelState.IsValid)
             {
@@ -73,6 +81,7 @@ namespace GymApplication.Controllers
         }
 
         // POST: api/Customers
+        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> PostCustomer(Customer customer)
         {
@@ -88,6 +97,7 @@ namespace GymApplication.Controllers
         }
 
         // DELETE: api/Customers/5
+        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> DeleteCustomer(int id)
         {
@@ -112,7 +122,7 @@ namespace GymApplication.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CustomerExists(int id)
+        private bool CustomerExists(string id)
         {
             return db.Customers.Count(e => e.ID == id) > 0;
         }

@@ -29,9 +29,9 @@
             new Trainer() { ID = 3, Name = "Julia", Surname = "Adamska" });
 
             context.Customers.AddOrUpdate(x => x.ID,
-            new Customer() { ID = 12345678, Name = "Stanisław", Surname = "Regulski", Email = "stanislaw.regulski@gmail.com", Password = "sregulski" },
-            new Customer() { ID = 21231231, Name = "Joanna", Surname = "Nowak", Email = "joanna.nowak@gmail.com", Password = "jnowak"},
-            new Customer() { ID = 33213213, Name = "Krzysztof", Surname = "Jędrzejczak", Email = "krzysztof.jedrzejczak@gmail.com", Password = "kjedrzejczak" });
+            new Customer() { ID = "abc", Name = "Stanisław", Surname = "Regulski", Email = "stanislaw.regulski@gmail.com"},
+            new Customer() { ID = "def", Name = "Joanna", Surname = "Nowak", Email = "joanna.nowak@gmail.com"},
+            new Customer() { ID = "ghi", Name = "Krzysztof", Surname = "Jędrzejczak", Email = "krzysztof.jedrzejczak@gmail.com"});
 
             context.Schedules.AddOrUpdate(x => x.ID,
             new Schedule() { ID = 1, ClassID = 1, TrainerID = 1, DateFrom = new DateTime(2020, 8, 10, 10, 0, 0), DateTo = new DateTime(2020, 8, 10, 11, 0, 0), NumberOfAvailablePlaces = 15 },
@@ -39,9 +39,9 @@
             new Schedule() { ID = 3, ClassID = 3, TrainerID = 3, DateFrom = new DateTime(2020, 8, 12, 17, 0, 0), DateTo = new DateTime(2020, 8, 12, 18, 0, 0), NumberOfAvailablePlaces = 10 });
 
             context.Reservations.AddOrUpdate(x => x.ID,
-            new Reservations() { ID = 1, CustomerID = 12345678, ScheduleID = 1 },
-            new Reservations() { ID = 2, CustomerID = 21231231, ScheduleID = 2 },
-            new Reservations() { ID = 3, CustomerID = 33213213, ScheduleID = 3 });
+            new Reservations() { ID = 1, CustomerID = "abc", ScheduleID = 1 },
+            new Reservations() { ID = 2, CustomerID = "def", ScheduleID = 2 },
+            new Reservations() { ID = 3, CustomerID = "ghi", ScheduleID = 3 });
 
             context.SaveChanges();
         }

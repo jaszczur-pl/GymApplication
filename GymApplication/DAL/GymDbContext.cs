@@ -17,6 +17,5 @@ namespace GymApplication.DAL
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Reservations> Reservations { get; set; }
-
     }
 }
