@@ -37,8 +37,7 @@ namespace GymApplication
 
         private async Task configSendGridasync(IdentityMessage message)
         {
-            string apiKey = "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";
-            //var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("befitapp1@gmail.com");
             var to = new EmailAddress(message.Destination);
