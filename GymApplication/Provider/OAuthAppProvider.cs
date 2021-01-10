@@ -33,13 +33,40 @@ namespace GymApplication.Provider
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+
+            //ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await userManager.FindByNameAsync(context.UserName);
 
             if (user == null)
             {
-                context.SetError("invalid_grant", "Nazwa użytkownika lub hasło są niepoprawne.");
+                context.SetError("invalid_grant", "Nazwa użytkownika jest niepoprawna.");
                 return;
             }
+
+            if (userManager.SupportsUserLockout && userManager.IsLockedOut(user.Id))
+            {
+                context.SetError("invalid_grant", "Użytkownik jest zablokowany, skontaktuj się z administratorem");
+                return;
+            }
+
+            if (userManager.CheckPassword(user, context.Password))
+            {
+                if(userManager.SupportsUserLockout && userManager.GetAccessFailedCount(user.Id) > 0)
+                {
+                    userManager.ResetAccessFailedCount(user.Id);
+                }
+            }
+            else
+            {
+                if(userManager.SupportsUserLockout && userManager.GetLockoutEnabled(user.Id))
+                {
+                    userManager.AccessFailed(user.Id);
+                }
+
+                context.SetError("invalid_grant", "Hasło jest niepoprawne.");
+                return;
+            }
+
 
             #region 2FA
             var isTwoFactorEnabled = await userManager.GetTwoFactorEnabledAsync(user.Id);

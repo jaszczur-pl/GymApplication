@@ -21,19 +21,7 @@ namespace GymApplication
             // Plug in your email service here to send an email.
             await configSendGridasync(message);
         }
-        /*        private async Task configSendGridasync(IdentityMessage message)
-                {
-                    string apiKey = ConfigurationManager.AppSettings["mailAPIKey"];
-                    dynamic sg = new SendGridAPIClient(apiKey, "https://api.sendgrid.com");
 
-                    Email from = new Email("demo@nexmo.com");
-                    string subject = message.Subject;
-                    Email to = new Email(message.Destination);
-                    Content content = new Content("text/plain", message.Body);
-                    Mail mail = new Mail(from, subject, to, content);
-
-                    dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
-                }*/
 
         private async Task configSendGridasync(IdentityMessage message)
         {
@@ -63,6 +51,12 @@ namespace GymApplication
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<AuthDbContext>()));
+
+            // Configure user lockout defaults
+            manager.UserLockoutEnabledByDefault = true;
+            manager.MaxFailedAccessAttemptsBeforeLockout = 3;
+            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromDays(365 * 100);
+
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -80,11 +74,6 @@ namespace GymApplication
             };
 
             #region 2FA
-            // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 3;
-
             manager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<ApplicationUser>
             {
                 Subject = "Kod uwierzytelniający",
