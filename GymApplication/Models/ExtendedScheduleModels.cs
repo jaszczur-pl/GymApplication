@@ -19,12 +19,17 @@ namespace GymApplication.Models
 
         [Required]
         public DateTime EndTime { get; set; }
-/*
+
         [Required]
         public string TrainerFullName { get; set; }
 
         [Required]
         public int NumberOfAvailablePlaces { get; set; }
-*/
+
+    }
+
+    public class ReservationModel
+    {
+        public int ScheduleID { get; set; }
     }
 }

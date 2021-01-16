@@ -24,4 +24,6 @@ namespace GymApplication.Models
         public Customer Customer { get; set; }
         public Schedule Schedule { get; set; }
     }
+
+
 }

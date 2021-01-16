@@ -77,7 +77,7 @@ namespace GymApplication.Provider
 
                 if (!updateResult.Succeeded)
                 {
-                    context.SetError("Błąd przy aktualizacji bazy uwierzytelniającej.");
+                    context.SetError("Błąd przy aktualizacji bazy danych.");
                     return;
                 }
 
@@ -86,7 +86,7 @@ namespace GymApplication.Provider
 
                 if (!notifyResulty.Succeeded)
                 {
-                    context.SetError("Błąd przy wysłaniu kod jednorazowego.");
+                    context.SetError("Błąd przy wysłaniu kodu jednorazowego.");
                     return;
                 }
             }

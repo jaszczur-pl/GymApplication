@@ -71,8 +71,6 @@ namespace GymApplication.Controllers
             }
         }
 
-
-
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)

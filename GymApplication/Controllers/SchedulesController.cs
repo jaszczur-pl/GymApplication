@@ -84,6 +84,14 @@ namespace GymApplication.Controllers
                 return BadRequest(ModelState);
             }
 
+            Classes classes = await db.Classes.FindAsync(schedule.ClassID);
+            if(classes == null)
+            {
+                return BadRequest("Podane zajęcia nie istnieją");
+            }
+
+            schedule.NumberOfAvailablePlaces = classes.UsersLimit;
+
             db.Schedules.Add(schedule);
             await db.SaveChangesAsync();
 
@@ -119,5 +127,6 @@ namespace GymApplication.Controllers
         {
             return db.Schedules.Count(e => e.ID == id) > 0;
         }
+
     }
 }

@@ -15,47 +15,47 @@ namespace GymApplication.Filters
 {
     public class TwoFactorAuthAttribute: AuthorizeAttribute
     {
-public override async Task OnAuthorizationAsync(HttpActionContext actionContext, System.Threading.CancellationToken cancellationToken)
-{
-    var userManager = 
-                HttpContext.Current.GetOwinContext().Get<ApplicationUserManager>();
+        public override async Task OnAuthorizationAsync(HttpActionContext actionContext, System.Threading.CancellationToken cancellationToken)
+        {
+            var userManager = 
+                        HttpContext.Current.GetOwinContext().Get<ApplicationUserManager>();
 
-    if (userManager == null)
-    {
-        actionContext.Response = actionContext.Request.CreateResponse(
-            HttpStatusCode.Unauthorized, new ResponseData
+            if (userManager == null)
             {
-                Code = 100,
-                Message = "Błąd przy autoryzacji użytkownika."
-            });
-        return;
-    }
+                actionContext.Response = actionContext.Request.CreateResponse(
+                    HttpStatusCode.Unauthorized, new ResponseData
+                    {
+                        Code = 100,
+                        Message = "Błąd przy autoryzacji użytkownika."
+                    });
+                return;
+            }
 
-    var principal = actionContext.RequestContext.Principal as ClaimsPrincipal;
+            var principal = actionContext.RequestContext.Principal as ClaimsPrincipal;
 
-    var user = await userManager.FindByNameAsync(principal?.Identity?.Name);
-    if (user == null)
-    {
-        actionContext.Response = actionContext.Request.CreateResponse(
-            HttpStatusCode.Unauthorized, new ResponseData
+            var user = await userManager.FindByNameAsync(principal?.Identity?.Name);
+            if (user == null)
             {
-                Code = 100,
-                Message = "Błąd przy autoryzacji użytkownika."
-            });
-        return;
-    }
+                actionContext.Response = actionContext.Request.CreateResponse(
+                    HttpStatusCode.Unauthorized, new ResponseData
+                    {
+                        Code = 100,
+                        Message = "Błąd przy autoryzacji użytkownika."
+                    });
+                return;
+            }
 
-    if (user.TwoFactorEnabled && !user.SecondFactorVerified)
-    {
-        actionContext.Response = actionContext.Request.CreateResponse(
-            HttpStatusCode.Unauthorized, new ResponseData
+            if (user.TwoFactorEnabled && !user.SecondFactorVerified)
             {
-                Code = 101,
-                Message = "Użytkownik musi być uwierzytelniony dwoma składnikami."
-            });
-    }
-    return;
-}
+                actionContext.Response = actionContext.Request.CreateResponse(
+                    HttpStatusCode.Unauthorized, new ResponseData
+                    {
+                        Code = 101,
+                        Message = "Użytkownik musi być uwierzytelniony dwoma składnikami."
+                    });
+            }
+            return;
+        }
     }
 
     public class ResponseData

@@ -30,11 +30,6 @@ namespace GymApplication.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class TwoFactorBindingModel
-    {
-        [Required]
-        public bool TwoFactorEnabled{ get; set; }
-    }
 
     public class ClientProfileBindingModel
     {

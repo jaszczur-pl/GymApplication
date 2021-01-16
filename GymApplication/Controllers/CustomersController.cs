@@ -80,26 +80,10 @@ namespace GymApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Customers
-        [Authorize(Roles = "Admin")]
-        [ResponseType(typeof(Customer))]
-        public async Task<IHttpActionResult> PostCustomer(Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Customers.Add(customer);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = customer.ID }, customer);
-        }
-
         // DELETE: api/Customers/5
         [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Customer))]
-        public async Task<IHttpActionResult> DeleteCustomer(int id)
+        public async Task<IHttpActionResult> DeleteCustomer(string id)
         {
             Customer customer = await db.Customers.FindAsync(id);
             if (customer == null)

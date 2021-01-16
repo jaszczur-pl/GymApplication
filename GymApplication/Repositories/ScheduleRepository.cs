@@ -27,10 +27,8 @@ namespace GymApplication.Repositories
                 Subject = classes.Name,
                 StartTime = schedule.DateFrom,
                 EndTime = schedule.DateTo,
-                 /*                StartTime = "2020-12-11T18:00:00Z",
-                                  EndTime = "2020-12-11T20:00:00Z",*/
-                 /*                TrainerFullName = trainers.Name + " " + trainers.Surname,
-                                 NumberOfAvailablePlaces = schedule.NumberOfAvailablePlaces,*/
+                TrainerFullName = trainers.Name + " " + trainers.Surname,
+                NumberOfAvailablePlaces = schedule.NumberOfAvailablePlaces,
              }).ToList();
 
             return extendedSchedule;

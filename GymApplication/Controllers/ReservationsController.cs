@@ -12,10 +12,11 @@ using System.Web.Http.Description;
 using GymApplication.DAL;
 using GymApplication.Filters;
 using GymApplication.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GymApplication.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles ="Admin")]
     [TwoFactorAuth]
     public class ReservationsController : ApiController
     {
@@ -75,20 +76,7 @@ namespace GymApplication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Reservations
-        [ResponseType(typeof(Reservations))]
-        public async Task<IHttpActionResult> PostReservations(Reservations reservations)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            db.Reservations.Add(reservations);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = reservations.ID }, reservations);
-        }
 
         // DELETE: api/Reservations/5
         [ResponseType(typeof(Reservations))]
@@ -99,6 +87,9 @@ namespace GymApplication.Controllers
             {
                 return NotFound();
             }
+
+            Schedule schedule = await db.Schedules.FindAsync(reservations.ScheduleID);
+            schedule.NumberOfAvailablePlaces++;
 
             db.Reservations.Remove(reservations);
             await db.SaveChangesAsync();
@@ -119,5 +110,8 @@ namespace GymApplication.Controllers
         {
             return db.Reservations.Count(e => e.ID == id) > 0;
         }
+
+
+
     }
 }
