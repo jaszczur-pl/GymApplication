@@ -16,14 +16,13 @@ using Microsoft.AspNet.Identity;
 
 namespace GymApplication.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [TwoFactorAuth]
     public class CustomersController : ApiController
     {
         private GymDbContext db = new GymDbContext();
 
         // GET: api/Customers
-        [Authorize(Roles = "Admin")]
         public IQueryable<Customer> GetCustomers()
         {
             return db.Customers;
@@ -31,7 +30,6 @@ namespace GymApplication.Controllers
 
 
         // GET: api/Customers/5
-        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> GetCustomer(int id)
         {
@@ -45,7 +43,6 @@ namespace GymApplication.Controllers
         }
 
         // PUT: api/Customers/5
-        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCustomer(string id, Customer customer)
         {
@@ -81,7 +78,6 @@ namespace GymApplication.Controllers
         }
 
         // DELETE: api/Customers/5
-        [Authorize(Roles = "Admin")]
         [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> DeleteCustomer(string id)
         {
